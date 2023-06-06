@@ -1,23 +1,18 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../components/AuthProvider';
 
-const Login = ({handleLogin}) => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const auth = useAuth();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (email === 'test@invyo.io' && password === 'test123@') {
-      alert('Success Login');
-      handleLogin();
-      navigate("/todo");
-    } else {
-      alert('Invalid Credentials');
-      console.log(email)
-      console.log(password);
-    }
+    auth.dispatch({type: 'LOGIN', value: {email, password}});
+    navigate('/todo');
   }
 
   return (
