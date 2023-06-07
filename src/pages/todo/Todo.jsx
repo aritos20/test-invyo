@@ -6,7 +6,7 @@ const Todo = () => {
   return (
     <>
       <TodoList />
-      <ModalTodo />
+      <ModalTodo action="Add Task" />
     </>
   )
 }

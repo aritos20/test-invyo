@@ -10,14 +10,14 @@ const reducer = (state, action) => {
     switch (action.type) {
         case 'LOGIN':
             if (action.value.email === 'test@invyo.io' && action.value.password === 'test123@') {
-                localStorage.setItem('login', JSON.stringify({email: action.value.email, isLogged: true}));
+                sessionStorage.setItem('login', JSON.stringify({email: action.value.email, isLogged: true}));
                 return {email:'', isLogged: true};
             } else {
                 alert('Invalid Credentials');
                 return {email: '', isLogged: false};
             }
         case 'LOGOUT':
-            localStorage.removeItem('login');
+            sessionStorage.removeItem('login');
             return {email: '', isLogged: false};
         default:
             return {...state};
@@ -25,7 +25,7 @@ const reducer = (state, action) => {
 }
 
 const AuthProvider = ({ children }) => {
-    const [user, dispatch] = useReducer(reducer, JSON.parse(localStorage.getItem('login')) || {email: '', isLogged: false});
+    const [user, dispatch] = useReducer(reducer, JSON.parse(sessionStorage.getItem('login')) || {email: '', isLogged: false});
 
   return (
     <AuthContext.Provider value={{user, dispatch}}>

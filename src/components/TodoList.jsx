@@ -6,12 +6,18 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@mui/material';
+import { deleteTask } from '../features/todoSlice';
+import ModalTodo from './ModalTodo';
 
 const TodoList = () => {
   const todoList = useSelector(state => state.todoStore.todoList);
-  console.log(todoList);
+  const dispatch = useDispatch();
+
+  const handleClick = (id) => {
+    dispatch(deleteTask(id));
+  }
 
   return (
     <TableContainer component={Paper} sx={{ width: '75%', margin: '0 auto', mt: 12 }}>
@@ -22,6 +28,8 @@ const TodoList = () => {
           <TableCell align="right">Description</TableCell>
           <TableCell align="right">Deadline</TableCell>
           <TableCell align="right">Status</TableCell>
+          <TableCell align="right">Edit</TableCell>
+          <TableCell align="right"></TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -35,8 +43,12 @@ const TodoList = () => {
             </TableCell>
             <TableCell align="right">{task.description}</TableCell>
             <TableCell align="right">{task.date}</TableCell>
+            <TableCell align="right">{task.status}</TableCell>
             <TableCell align="right">
-             <Button variant="contained" color="error">Delete</Button>
+             <ModalTodo action="Edit task" index={index}/>
+            </TableCell>
+            <TableCell align="right">
+             <Button variant="contained" color="error" onClick={() => handleClick(index)}>Delete</Button>
             </TableCell>
           </TableRow>
         ))}
