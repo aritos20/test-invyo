@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/test-invyo/static/css/main.073c9b0a.css",
+    "main.js": "/test-invyo/static/js/main.a91b7bdb.js",
+    "static/js/787.c8b19f2a.chunk.js": "/test-invyo/static/js/787.c8b19f2a.chunk.js",
+    "index.html": "/test-invyo/index.html",
+    "main.073c9b0a.css.map": "/test-invyo/static/css/main.073c9b0a.css.map",
+    "main.a91b7bdb.js.map": "/test-invyo/static/js/main.a91b7bdb.js.map",
+    "787.c8b19f2a.chunk.js.map": "/test-invyo/static/js/787.c8b19f2a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.a91b7bdb.js"
+  ]
+}
