@@ -1,6 +1,7 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { data } from '../../data';
+import { Input } from '@mui/material';
 
 const columns = [
   { field: 'title', headerName: 'Title', flex: 1,
@@ -22,13 +23,18 @@ const columns = [
       <div
         style={{
           display: 'flex',
+          flexWrap: 'wrap',
           justifyContent: 'center',
+          gap: '4px'
+        }}
+      >
+        {statusArray.map(tag => {
+          return (<span style={{
           alignItems: 'center',
           background: 'lightblue',
           borderRadius: '4px',
-        }}
-      >
-        {statusArray}
+          padding: '6px'}}>{tag}</span>);
+        })}
       </div>
     );
   }},
@@ -43,19 +49,56 @@ const rows = data.articles.map((data, index) => {
     }})
 
 export default function DataTable() {
+  const [dataFilter, setDataFilter] = useState(data.articles.map((data, index) => {
+    return {id: index,
+      title: data.Title,
+      content: data.Content,
+      language: data.Language,
+      tags: data.Tags.topic}
+  }) || []);
+  const [filter, setFilter] = useState('');
+
+  const handleChange = (e) => {
+    if (e.target.value === '') {
+      setDataFilter(data.articles.map((data, index) => {
+        return {id: index,
+          title: data.Title,
+          content: data.Content,
+          language: data.Language,
+          tags: data.Tags.topic}
+      }))
+    } else if (dataFilter.length === 0) {
+      setDataFilter(data.articles.map((data, index) => {
+        return {id: index,
+          title: data.Title,
+          content: data.Content,
+          language: data.Language,
+          tags: data.Tags.topic}
+      }))
+    }
+    else {
+      setDataFilter(dataFilter.filter(item => item.title.toLowerCase().includes(e.target.value.toLowerCase())));
+    }
+    setFilter(e.target.value);
+  }
+
   return (
-    <div style={{ height: 1000, width: '80%', margin: '0 auto' }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        rowHeight={200}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 10 },
-          },
-        }}
-        pageSizeOptions={[10]}
-      />
-    </div>
+    <>
+      <Input placeholder="Filter by Title" sx={{display: 'block', margin: '0 auto', width: '20%', mb: 4}}
+      onChange={handleChange} value={filter} />
+      <div style={{ height: 1000, width: '80%', margin: '0 auto' }}>
+        <DataGrid
+          rows={filter !== '' ? dataFilter : rows}
+          columns={columns}
+          rowHeight={200}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 10 },
+            },
+          }}
+          pageSizeOptions={[10]}
+        />
+      </div>
+    </>
   );
 }
