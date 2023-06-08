@@ -31,23 +31,29 @@ export default function ModalTodo({ action, index }) {
     setOpen(false);
     setTitle('');
     setDescription('');
+    setDate('');
 };
 
   const handleClick = () => {
     if (action === "Add Task") {
-      dispatch(addTask({title, description, date}));
+      if (date) {
+        dispatch(addTask({title, description, date, status: '', show: true}));
+      } else {
+        alert('please enter a due date')
+      }
     } else {
-      dispatch(editTask({title, description, date, index}));
+      dispatch(editTask({title, description, date, status:'', show: true, index}));
     }
     setOpen(false);
     setTitle('');
     setDescription('');
+    setDate('');
   }
 
   return (
     <div>
       {action === "Add Task" ?
-      <Button onClick={handleOpen} variant="contained" sx={{backgroundColor: 'blue', color: 'white', margin: '0 auto', display: 'block', mt: 12, width: '150px'}}>{action}</Button>
+      <Button onClick={handleOpen} variant="contained" sx={{ margin: '0 auto', display: 'block', mt: 12, width: '150px'}}>{action}</Button>
       : <Button variant="contained" onClick={handleOpen}>{action}</Button>}
       <Modal
         open={open}
@@ -62,8 +68,8 @@ export default function ModalTodo({ action, index }) {
           <TextField id="title" placeholder='Description' value={description} onChange={(e) => setDescription(e.target.value)} sx={{mb: 4}}/>
           <Typography variant="h6" component="h2">A target Date</Typography>
           <TextField id="title" type={"date"} value={date} onChange={(e) => setDate(e.target.value)} sx={{display: 'block'}} />
-          <Button onClick={handleClick} type="submit" variant="contained" sx={{backgroundColor: 'blue', color: 'white', mt: 4, mr: 4}}>{action}</Button>
-          <Button onClick={handleClose} variant="contained" sx={{backgroundColor: 'blue', color: 'white', mt: 4}}>Cancel</Button>
+          <Button onClick={handleClick} type="submit" variant="contained" sx={{mt: 4, mr: 4}}>{action}</Button>
+          <Button onClick={handleClose} variant="contained" sx={{mt: 4}}>Cancel</Button>
         </Box>
       </Modal>
     </div>

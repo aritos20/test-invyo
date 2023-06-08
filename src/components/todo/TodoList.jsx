@@ -28,6 +28,7 @@ const TodoList = () => {
       </TableHead>
       <TableBody>
         {todoList.map((task, index) => (
+          task.show &&
           <TableRow
             key={index}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
