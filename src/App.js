@@ -12,7 +12,7 @@ function App() {
 
   return (
     <AuthProvider>
-      <BrowserRouter>
+      <BrowserRouter basename='/test-invyo'>
       <PrivateRoute>
         <NavBar />
       </PrivateRoute> 
